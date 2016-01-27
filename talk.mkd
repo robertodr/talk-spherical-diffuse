@@ -5,13 +5,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- This is template for http://remarkjs.com/ by Ole Petter Bang -->
     <!-- CSS modifcations by J. M. Lilly-->
-
     <style type="text/css">
       /* Slideshow styles */
     </style>
   </head>
   <body>
     <textarea id="source">
+
 name: inverse
 layout: true
 class: center, middle, inverse
