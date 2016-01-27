@@ -313,10 +313,23 @@ Pressing __C__ will open a cloned view of the current slideshow in a new
 browser window.
 ]
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      /* Slideshow styles */
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
 
----
+class: center, middle
 
 # `\(\LaTeX{}\)` in remark
+
+---
 
 # Display and Inline
 
@@ -349,6 +362,7 @@ $$e^{i\pi} + 1 = 0$$
     </script>
   </body>
 </html>
+
 
 ---
 template: inverse
