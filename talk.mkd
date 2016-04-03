@@ -1,23 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Your Title Here</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <!-- This is template for http://remarkjs.com/ by Ole Petter Bang -->
-    <!-- CSS modifcations by J. M. Lilly-->
-    <style type="text/css">
-      /* Slideshow styles */
-    </style>
-  </head>
-  <body>
-    <textarea id="source">
-
 name: inverse
+background-image: url(ctcc-frontslide.jpg)
 layout: true
 class: center, middle, inverse
 ---
-#remark
-[ri-mahrk]
+#Polarizable Continuum Model for Spherically Symmetric Diffuse Interfaces
+
+.author[Roberto Di Remigio]
+
 .footnote[Go directly to [project site](https://github.com/gnab/remark)]
 ---
 ## What is it and why should I be using it?
@@ -344,43 +333,32 @@ Getting up and running is done in only a few steps:
 For more information on using remark, please check out the [wiki](https://github.com/gnab/remark/wiki) pages.
 ]
 ---
+class: left
+
+##  How About Some Gnarly Equations?
+
+I'm glad you asked.  With a link to the MathJax Javascript library, you can
+write inline equations  `\(E=mc^2\)`, or full-line equations like:
+
+`$$\Gamma(t)=  \pi \, \Im\left\{ \mathbf{x}_+^H(t) \, \frac{\mathrm{d}}{\mathrm{d} t}\mathbf{x}_+(t)\right\}$$`
+
+You can just write in LaTeX, with minor modifications for specifying in-line or
+full-line equations.  Also, in Remark, the equations are surrounded by
+backquotes, as you see in the source.
+
+
+[{MathJax}](https://www.mathjax.org/) lets you write your equations in other ways; see the documentation for details.
+
+
+Note that writing equations in MathJax impacts the portability of your talk.
+Currently, this template links to a local copy of Remark, but a remote (online)
+copy of MathJax.  If you want the equations to work when you are offline, you
+need to copy the entire MathJax project, about 150 Mb.  See the comments at the
+bottom of this file.
+---
 name: last-page
 template: inverse
 
 ## That's all folks (for now)!
 
 Slideshow created using [remark](http://github.com/gnab/remark).
-
-    </textarea>
-    <!-- This is the link to the local copy of Remark -->
-    <script src="../javascript/remark-latest.min.js" type="text/javascript"></script>
-    <!-- See discussion at https://github.com/gnab/remark/issues/222-->
-    <!-- You could alternately use the libraries from remote location -->
-    <!--<script src="https://gnab.github.io/remark/downloads/remark-latest.min.js" type="text/javascript"></script>-->
-
-    <!-- This is the link to the remote MathJax libraries -->
-    <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured" type="text/javascript"></script>
-    <!-- If you want to run your presentation offline, you need to download the MathJax -->
-    <!-- libraries, then uncomment the line below and comment out the one above.-->
-    <!--<script src="../javascript/MathJax/MathJax.js?config=TeX-AMS_HTML&delayStartupUntil=configured,local/local" type="text/javascript"></script> -->
-    <!-- Note: see comment at http://stackoverflow.com/questions/19208536/mathjax-not-working-if-loaded-from-local-js-file-or-if-the-source-code-is-includ-->
-
-    <script type="text/javascript">
-      var slideshow = remark.create({navigation: {click: false}, properties: {class: "center, middle"}});
-
-      // Setup MathJax
-      MathJax.Hub.Config({
-          tex2jax: {
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-          }
-      });
-      MathJax.Hub.Queue(function() {
-          $(MathJax.Hub.getAllJax()).map(function(index, elem) {
-              return(elem.SourceElement());
-          }).parent().addClass('has-jax');
-      });
-
-      MathJax.Hub.Configured();
-    </script>
-  </body>
-</html>
