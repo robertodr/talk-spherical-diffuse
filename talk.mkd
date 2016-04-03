@@ -1,5 +1,4 @@
 name: inverse
-background-image: url(ctcc-frontslide.jpg)
 layout: true
 class: center, middle, inverse
 ---
@@ -7,358 +6,538 @@ class: center, middle, inverse
 
 .author[Roberto Di Remigio]
 
-.footnote[Go directly to [project site](https://github.com/gnab/remark)]
----
-## What is it and why should I be using it?
+.date[6 April 2016, Alta]
+
+.footnote[Slides available on [GitHub](https://github.com/robertodr/talk-spherical-diffuse), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licensed]
+
+???
+I will present a recent extension to the PCM.
+We are now able to tackle nonuniform environments
+with spatially varying permittivity in spherical symmetry.
+
 ---
 layout: false
-.left-column[
-  ## What is it?
-]
-.right-column[
-  A simple, in-browser, Markdown-driven slideshow tool targeted at people who know their way around HTML and CSS, featuring:
 
-- Markdown formatting, with smart extensions
-
-- Presenter mode, with cloned slideshow view
-
-- Syntax highlighting, supporting a range of languages
-
-- Slide scaling, thus similar appearance on all devices / resolutions .red[*]
-
-- Touch support for smart phones and pads, i.e. swipe to navigate slides
-
-.footnote[.red[*] At least browsers try their best]
-]
----
-.left-column[
-  ## What is it?
-  ## Why use it?
-]
-.right-column[
-If your ideal slideshow creation workflow contains any of the following steps:
-
-- Just write what's on your mind
-
-- Do some basic styling
-
-- Easily collaborate with others
-
-- Share with and show to everyone
-
-Then remark might be perfect for your next.red[*] slideshow!
-
-.footnote[.red[*] You probably want to convert existing slideshows as well]
-]
----
-.left-column[
-  ## What is it?
-  ## Why use it?
-]
-.right-column[
-As the slideshow is expressed using Markdown, you may:
-
-- Focus on the content, expressing yourself in next to plain text not worrying what flashy graphics and disturbing effects to put where
-
-As the slideshow is actually an HTML document, you may:
-
-- Display it in any decent browser
-
-- Style it using regular CSS, just like any other HTML content
-
-- Use it offline!
-
-As the slideshow is contained in a plain file, you may:
-
-- Store it wherever you like; on your computer, hosted from your Dropbox, hosted on Github Pages alongside the stuff you're presenting...
-
-- Easily collaborate with others, keeping track of changes using your favourite SCM tool, like Git or Mercurial
-]
----
-template: inverse
-
-## How does it work, then?
----
-name: how
+<p style="text-align:left;">
+<img src="images/paper.png" style="width: 110%">
+</p>
 
 .left-column[
-  ## How does it work?
-### - Markdown
+  ## Outline
 ]
 .right-column[
-A Markdown-formatted chunk of text is transformed into individual slides by JavaScript running in the browser:
 
-```remark
-# Slide 1
-This is slide 1
+- Diffuse interfaces
 
----
+- Polarizable continuum model
 
-# Slide 2
-This is slide 2
-```
+- Green's functions in spherical symmetry
 
-.slides[
-  .first[
-  ### Slide 1
-  This is slide 1
-  ]
-  .second[
-  ### Slide 2
-  This is slide 2
-  ]
-]
+- Implementation
 
-Regular Markdown rules apply with only a single exception:
-
-  - A line containing three dashes constitutes a new slide
-  (not a horizontal rule, `&lt;hr /&gt;`)
-
-Have a look at the [Markdown website](http://daringfireball.net/projects/markdown/) if you're not familiar with Markdown formatting.
-]
----
-.left-column[
-  ## How does it work?
-  ### - Markdown
-  ### - Inside HTML
-]
-.right-column[
-A simple HTML document is needed for hosting the styles, Markdown and the generated slides themselves:
-
-```xml
-<!DOCTYPE html>
-<html>
-  <head>
-    <style type="text/css">
-      /* Slideshow styles */
-    </style>
-  </head>
-  <body>
-*    <textarea id="source">
-      <!-- Slideshow Markdown -->
-    &lt;/textarea&gt;
-*    <script src="remark.js">
-    </script>
-    <script>
-*      var slideshow = remark.create();
-    </script>
-  </body>
-</html>
-```
-
-You may download remark to have your slideshow not depend on any online resources, or reference the [latest version](http://remarkjs.com/downloads/remark-latest.min.js) online directly.
-]
----
-template: inverse
-
-## Of course, Markdown can only go so far.
----
-.left-column[
-  ## Markdown extensions
-]
-.right-column[
-To help out with slide layout and formatting, a few Markdown extensions have been included:
-
-- Slide properties, for naming, styling and templating slides
-
-- Content classes, for styling specific content
-
-- Syntax highlighting, supporting a range of languages
-]
-
----
-.left-column[
-  ## Markdown extensions
-  ### - Slide properties
-]
-.right-column[
-Initial lines containing key-value pairs are extracted as slide properties:
-
-```remark
-name: agenda
-class: middle, center
-
-# Agenda
-
-The name of this slide is {{ name }}.
-```
-
-Slide properties serve multiple purposes:
-
-* Naming and styling slides using properties `name` and `class`
-
-* Using slides as templates using properties `template` and `layout`
-
-* Expansion of `{{ property }}` expressions to property values
-
-See the [complete list](https://github.com/gnab/remark/wiki/Markdown#slide-properties) of slide properties.
-]
----
-.left-column[
-  ## Markdown extensions
-  ### - Slide properties
-  ### - Content classes
-]
-.right-column[
-Any occurences of one or more dotted CSS class names followed by square brackets are replaced with the contents of the brackets with the specified classes applied:
-
-```remark
-.footnote[.red.bold[*] Important footnote]
-```
-
-Resulting HTML extract:
-
-```xml
-<span class="footnote">
-  <span class="red bold">*</span> Important footnote
-</span>
-```
-]
----
-.left-column[
-  ## Markdown extensions
-  ### - Slide properties
-  ### - Content classes
-  ### - Syntax Highlighting
-]
-.right-column[
-Code blocks can be syntax highlighted by specifying a language from the set of [supported languages](https://github.com/gnab/remark/wiki/Configuration#highlighting).
-
-Using [GFM](http://github.github.com/github-flavored-markdown/) fenced code blocks you can easily specify highlighting language:
-
-.pull-left[
-
-<pre><code>```javascript
-function add(a, b)
-  return a + b
-end
-```</code></pre>
-]
-.pull-right[
-
-<pre><code>```ruby
-def add(a, b)
-  a + b
-end
-```</code></pre>
-]
-
-A number of highlighting [styles](https://github.com/gnab/remark/wiki/Configuration#highlighting) are available, including several well-known themes from different editors and IDEs.
+- Results and outlook
 
 ]
----
-.left-column[
-  ## Presenter mode
-]
-.right-column[
-To help out with giving presentations, a presenter mode comprising the
-following features is provided:
 
-- Display of slide notes for the current slide, to help you remember
-  key points
-
-- Display of upcoming slide, to let you know what's coming
-
-- Cloning of slideshow for viewing on extended display
-]
----
-.left-column[
-  ## Presenter mode
-  ### - Inline notes
-]
-.right-column[
-Just like three dashes separate slides,
-three question marks separate slide content from slide notes:
-
-```
-Slide 1 content
-
-*???
-
-Slide 1 notes
-
----
-
-Slide 2 content
-
-*???
-
-Slide 2 notes
-```
-
-Slide notes are also treated as Markdown, and will be converted in the
-same manner slide content is.
-
-Pressing __P__ will toggle presenter mode.
-]
 ???
-Congratulations, you just toggled presenter mode!
 
-Now press __P__ to toggle it back off.
 ---
-.left-column[
-  ## Presenter mode
-  ### - Inline notes
-  ### - Cloned view
-]
-.right-column[
-Presenter mode of course makes no sense to the audience.
+## Diffuse interfaces
 
-Creating a cloned view of your slideshow lets you:
-
-- Move the cloned view to the extended display visible to the audience
-
-- Put the original slideshow in presenter mode
-
-- Navigate as usual, and the cloned view will automatically keep up with the original
-
-Pressing __C__ will open a cloned view of the current slideshow in a new
-browser window.
-]
 ---
-template: inverse
+## Polarizable continuum model.red[<sup>1</sup>]
 
-## It's time to get started!
+<p style="text-align:center;"><img src="images/pcm.png" style="width: 95%"></p>
+
+.footnote[.red[<sup>1</sup>] J. Tomasi, B. Mennucci, R. Cammi, _Chem. Rev._, __105__, 2999, (2005)]
+
+???
+
+- Model the solvent as a polarizable dielectric continuum
+- Parameters for the definition of the boundary, i.e. the cavity
+- Parameters describing the solvent: permittivity (static and optical)
+- Notice that the solvent parameters are, _by definition_, averaged!
+
 ---
-.left-column[
-  ## Getting started
-]
-.right-column[
-Getting up and running is done in only a few steps:
+## Mathematics of PCM.red[<sup>2</sup>]
 
-1. Visit the [project site](http://github.com/gnab/remark)
+- Transmission problem, find `\(\psi\)` such that:
+`$$
+ \begin{align}
+  L_\mathrm{i} \psi(\mathbf{r}) &= -4\pi\rho(\mathbf{r}) \quad \forall \mathbf{r} \in C \\
+  L_\mathrm{e} \psi(\mathbf{r}) &= 0 \quad \forall \mathbf{r} \notin C \\
+  [\psi(\mathbf{s})] &= 0 \quad \forall \mathbf{s}\,\text{in}\,\partial C \\
+  [\partial_L \psi(\mathbf{s})] &= 0 \quad \forall \mathbf{s}\,\text{in}\,\partial C \\
+  |\psi(\mathbf{r})| &\leq C \|\mathbf{r} \|^{-1} \,\,\text{for}\,\,\| \mathbf{r} \|\rightarrow\infty
+ \end{align}
+$$`
+    * `\(L_\mathrm{i}\)` and `\(L_\mathrm{e}\)` are elliptic differential operators
+    * `\([\psi(\mathbf{s})]\)` is the Dirichlet condition in terms of  _trace operators_
+    * `\([\partial_L \psi(\mathbf{s})]\)` is the Neumann condition in terms in terms of _conormal derivatives_
+- Define the _reaction potential_:
+`$$
+ \psi(\mathbf{r}) = \phi(\mathbf{r}) + \xi(\mathbf{r})
+ = \int_C \mathop{}\!\mathrm{d}\mathbf{r}^\prime \frac{\rho(\mathbf{r}^\prime)}{|\mathbf{r} - \mathbf{r}^\prime|} +
+  \int_{\partial C} \mathop{}\!\mathrm{d}\mathbf{s} \frac{\sigma(\mathbf{s})}{|\mathbf{r} - \mathbf{s}|}
+$$`
+- Find its _representation_ inside the cavity as a solution to an integral equation
 
-2. Follow the steps in the Getting Started section
+.footnote[.red[<sup>2</sup>] E. Cancès, B. Mennucci, _J. Math. Chem._, __23__, 309, (1998)]
 
-For more information on using remark, please check out the [wiki](https://github.com/gnab/remark/wiki) pages.
-]
+???
+
+- `\(L_\star\)` are elliptic differential operators
+- Trace operators are the extension of the concept of restriction of a function
+  over a boundary to generalized functions in Sobolev space
+- Conormal derivative extends the notion of a normal derivative to functions in
+  Sobolev spaces
+- `\(\sigma(\mathbf{s})\)` is called the apparent surface charge (ASC)
+
+---
+
+## Mathematics of PCM, contd..red[<sup>3</sup>]
+
+- `\(\sigma\)` is the _unique solution_ to the IEF-PCM equation:
+`$$
+\left[\left(2\pi\mathcal{I} - \mathcal{D}_\mathrm{e}\right)\mathcal{S}_\mathrm{i} +
+      \mathcal{S}_\mathrm{e}\left(2\pi\mathcal{I} + \mathcal{D}^\dagger_\mathrm{i}\right) \right]\sigma =
+-\left[\left(2\pi\mathcal{I} - \mathcal{D}_\mathrm{e}\right) -
+\mathcal{S}_\mathrm{e}\mathcal{S}_\mathcal{i}^{-1}\left(2\pi\mathcal{I} - \mathcal{D}_\mathrm{i}\right)\right]\phi
+$$`
+- Integral operators are Calderón projector components:
+`$$
+ \begin{align}
+  (\mathcal{S}_\star f)(\mathbf{s}) &= \int_{\partial C} \mathop{}\!\mathrm{d}\mathbf{s}^\prime \color{red}{G(\mathbf{s}, \mathbf{s}^\prime)}f(\mathbf{s}^\prime) \\
+  (\mathcal{D}_\star f)(\mathbf{s}) &= \int_{\partial C} \mathop{}\!\mathrm{d}\mathbf{s}^\prime [\partial_{L_\star}^\prime\color{red}{G(\mathbf{s}, \mathbf{s}^\prime)}]f(\mathbf{s}^\prime) \\
+  (\mathcal{D}^\dagger_\star f)(\mathbf{s}) &= \int_{\partial C} \mathop{}\!\mathrm{d}\mathbf{s}^\prime [\partial_{L_\star}\color{red}{G(\mathbf{s}, \mathbf{s}^\prime)}]f(\mathbf{s}^\prime)
+ \end{align}
+$$`
+- Solution by a boundary element method (BEM):
+   * Discretized cavity boundary + piecewise regular bases = finite elements
+   * Form boundary integral operators: _Galerkin_ or _collocation_ method
+   * Solve linear system: direct inversion or iterative solver
+
+.footnote[.red[<sup>3</sup>] S. A. Sauter and C. Schwab, _Boundary Element Methods_, Springer, 2011]
+
+???
+
+- We've transformed a boundary value problem (BVP) into a boundary integral equation (BIE)
+- Integral operators are defined in terms of traces and conormal derivatives
+- The integral operators have well-defined mapping properties between Sobolev
+  spaces of fractional order
+- Knowledge of the Green's functions inside and outside the cavity is key to
+  the method
+
+---
+class: center, middle, inverse
+## Green's functions in spherical symmetry
+
+---
+layout: false
+
+- The Green's function is the solution to:
+`
+$$
+  \nabla\cdot[\varepsilon(\mathbf{r})\nabla
+  G(\mathbf{r},\mathbf{r}^\prime)]=-4\pi\delta(\mathbf{r}-\mathbf{r}^\prime)
+$$
+`
+- Spherically symmetric permittivity `\( \varepsilon(\mathbf{r}) \equiv \varepsilon(r) \)`, thus:
+`$$
+ G(\mathbf{r}, \mathbf{r}^\prime) = \sum_{\ell=0}^{\infty} R_\ell(r, r^\prime) P_{\ell}(\cos \gamma),
+ \quad \cos\gamma = \frac{\mathbf{r}\cdot\mathbf{r}^\prime}{|\mathbf{r}| |\mathbf{r}^\prime|}
+$$`
+- The radial part is solution to:
+`
+$$
+  \frac{\mathop{}\!\mathrm{d}^2 R_\ell}{\mathop{}\!\mathrm{d} r^2} + \left(\frac{2}{r} +
+  \lambda_\varepsilon(r)\right)\frac{\mathop{}\!\mathrm{d} R_\ell}{\mathop{}\!\mathrm{d} r} - \frac{\ell(\ell+1)}{r^2}R_\ell
+ = -\frac{4\pi}{r^2}\frac{1}{\varepsilon(r)}\delta(r-r^\prime)
+$$
+`
+   * `\(\lambda_\varepsilon(r) = \frac{\mathop{}\!\mathrm{d}\varepsilon(r)}{\mathop{}\!\mathrm{d}r}\frac{1}{\varepsilon(r)}\)`
+     weighted dielectric distribution
+- Two solutions, `\(u_\ell\sim r^\ell\)` and `\(v_\ell\sim r^{-\ell -1}\)`:
+`
+$$
+  G(\mathbf{r}, \mathbf{r}^\prime) = \sum_{\ell=0}^\infty G_\ell(\mathbf{r}, \mathbf{r}^\prime)
+  =
+  \begin{cases}
+    \sum_{\ell=0}^\infty
+    \frac{-(2\ell+1)}{r^{\prime 2}\varepsilon(r^\prime)}
+    \frac{u_\ell(r)v_\ell(r^\prime)}{W_\ell(r^\prime)}
+    P_\ell(\cos\gamma),\,\text{for}\,\, r<r^\prime \\
+   \sum_{\ell=0}^\infty
+   \frac{-(2\ell+1)}{r^{\prime 2}\varepsilon(r^\prime)}
+   \frac{u_\ell(r^\prime)v_\ell(r)}{W_\ell(r^\prime)}
+    P_\ell(\cos\gamma),\,\text{for}\,\, r>r^\prime
+  \end{cases}
+$$
+`
+   * `\(u_\ell\)` and `\(v_\ell\)` to be determined _numerically_
+   * `\(W_\ell = \frac{\mathop{}\!\mathrm{d} v_\ell}{\mathop{}\!\mathrm{d}r}u_\ell - \frac{\mathop{}\!\mathrm{d}u_\ell}{\mathop{}\!\mathrm{d}r}v_\ell\)` is the _Wronskian_
+
+???
+
+- The Green's function for a given differential operator is the solution to the
+  differential equation with a point source. It's also called the _fundamental
+  solution_
+- We also have azimuthal symmetry, hence the summation over Legendre
+  polynomials. This can be shown more rigorously starting from the summation
+  over spherical harmonics.
+- The radial equation is similar to the usual one where spherical boundary
+  conditions are imposed. The difference is the additional first order term due
+  to the weighted dielectric distribution, which can be thought to act as a damping
+  term. The source term is also "damped".
+
 ---
 class: left
+layout: false
 
-##  How About Some Gnarly Equations?
+## Separation of the Coulomb singularity
 
-I'm glad you asked.  With a link to the MathJax Javascript library, you can
-write inline equations  `\(E=mc^2\)`, or full-line equations like:
+`
+$$
+  G(\mathbf{r}, \mathbf{r}^\prime) = \sum_{\ell=0}^\infty G_\ell(\mathbf{r}, \mathbf{r}^\prime)
+$$
+`
 
-`$$\Gamma(t)=  \pi \, \Im\left\{ \mathbf{x}_+^H(t) \, \frac{\mathrm{d}}{\mathrm{d} t}\mathbf{x}_+(t)\right\}$$`
+- Components `\(G_\ell(\mathbf{r}, \mathbf{r}^\prime)\)` contain Coulomb and image contributions:
+   * Numerically slowly converging
+   * Troublesome for subsequent BEM collocation
+- Use _exact_ expression of Coulomb singularity, modulated by proper coefficient:
+`
+$$
+  G(\mathbf{r}, \mathbf{r}^\prime) =
+  \frac{1}{C(\mathbf{r}, \mathbf{r}^\prime)|\mathbf{r} - \mathbf{r}^\prime|} +
+  G_\mathrm{img}(\mathbf{r}, \mathbf{r}^\prime)
+$$
+`
+   * The image potential is _nonsingular_
+- Coefficient is calculated as:
+`
+$$
+  C(\mathbf{r}, \mathbf{r}^\prime)
+  =
+  \begin{cases}
+    \frac{1}{r^\prime}
+    \lim_{\ell\rightarrow\infty}
+    \left(\frac{r}{r^\prime}\right)^\ell
+    \frac{P_\ell(\cos\gamma)}{G_\ell(\mathbf{r}, \mathbf{r}^\prime)},\,\text{for}\,\, r<r^\prime \\
+    \frac{1}{r}
+    \lim_{\ell\rightarrow\infty}
+    \left(\frac{r^\prime}{r}\right)^\ell
+    \frac{P_\ell(\cos\gamma)}{G_\ell(\mathbf{r}, \mathbf{r}^\prime)},\,\text{for}\,\, r>r^\prime
+  \end{cases}
+$$
+`
 
-You can just write in LaTeX, with minor modifications for specifying in-line or
-full-line equations.  Also, in Remark, the equations are surrounded by
-backquotes, as you see in the source.
+---
+
+## Separation of the Coulomb singularity, contd.
+
+- Image potential:
+`
+$$
+  G_\mathrm{img}(\mathbf{r}, \mathbf{r}^\prime)
+  =
+  \sum_{\color{red}{\ell = 1}}^\infty
+  \left(G_\ell(\mathbf{r}, \mathbf{r}^\prime) -
+  \frac{1}{C(\mathbf{r}, \mathbf{r}^\prime)|\mathbf{r} -
+  \mathbf{r}^\prime|}\right)
+$$
+`
+   * Monopole term removed: it's entirely contained in the singular, Coulomb portion
+   * Unphysical additional polarization would arise at the interface
+   * Consistent with sharp spherical interface results
+
+--
+
+<p style="text-align:center;"><img src="images/why_you_need_testing.jpg" style="width: 50%"></p>
+
+???
+
+- We have to remove an unphysical monopole contribution
+
+---
+
+## Implementation
+
+- Exponential transformation of the radial ODE:
+`
+$$
+  \frac{\mathop{}\!\mathrm{d}^2\rho_\ell}{\mathop{}\!\mathrm{d}r} + \left(\frac{\mathop{}\!\mathrm{d}\rho_\ell}{\mathop{}\!\mathrm{d}r}\right)
+  \left(\frac{\mathop{}\!\mathrm{d}\rho_\ell}{\mathop{}\!\mathrm{d}r} + \frac{2}{r} + \lambda_\varepsilon(r)\right) - \frac{\ell(\ell + 1)}{r^2} = 0
+$$
+`
+- ODE solved using the Bulirsch-Stoer adaptive integrator for the system:
+`
+$$
+ \left\lbrace
+ \begin{aligned}
+ \frac{\mathop{}\!\mathrm{d}\rho_\ell}{\mathop{}\!\mathrm{d}r} &= \sigma_\ell \\
+ \frac{\mathop{}\!\mathrm{d}\sigma_\ell}{\mathop{}\!\mathrm{d}r} &= -\sigma_\ell\left(\sigma_\ell + \frac{2}{r} + \lambda_\varepsilon(r)\right) + \frac{l(l+1)}{r^2}
+ \end{aligned}
+ \right.
+$$
+`
+- Summations are truncated to `\(L\)`
+- Separation coefficient evaluated at `\(\ell=2L\)`
+- Cubic spline interpolations for radial sampling of solutions
+- Green's function directional derivative evaluated by a 3-point stencil
+- Available in [LSDALTON](http://daltonprogram.org/) _via_ [PCMSolver](http://pcmsolver.readthedocs.org)
+
+???
+
+- The exponential transformation avoids possible arithmetic overflows
+- Truncation is to `\(L=30\)` by default
+
+---
+class: center, middle, inverse
+## Results
+
+---
+layout: false
+
+## Permittivity profiles
+
+<p style="text-align:center;"><img src="images/permittivity_profiles.jpg" style="width: 55%"></p>
+
+`$$
+\begin{alignat}{2}
+\varepsilon(z) =  \frac{\varepsilon_1+\varepsilon_2}{2} + \frac{\varepsilon_2-\varepsilon_1}{2}\Sigma\left(\frac{z-c}{w}\right);
+\quad&\quad
+f(\varepsilon) =  \frac{\varepsilon(z)-1 }{\varepsilon(z)}
+\end{alignat}
+$$`
+
+- Onset of dielectric effect dominated by _Onsager factor_
+- `\(\Sigma\)` has to be differentiable
+- `\(w\)` too small leads to numerical instabilities
+
+???
+
+- on the x axis is the distance from the interface center
+- `\(w = \frac{\tilde{w}}{6}\)` to keep consistency with Frediani et al.
+- `\(\Sigma\)` is a sigmoidal function, centered at `\(c\)`. The `\(w\)` parameter
+is the HWHM for the associated distribution function, i.e. its first derivative
+- Despite the fact that the variation in permittivity happens around `\(c\)`, the onset
+of the dielectric effect will be delayed slightly. This can be rationalized in
+terms of the Onsager factor.
+- The figure assumes `\(c = 10~\AA\)` and the droplet centered at the origin
 
 
-[{MathJax}](https://www.mathjax.org/) lets you write your equations in other ways; see the documentation for details.
+---
+layout: false
 
+## Effect of interface width: ions
 
-Note that writing equations in MathJax impacts the portability of your talk.
-Currently, this template links to a local copy of Remark, but a remote (online)
-copy of MathJax.  If you want the equations to work when you are offline, you
-need to copy the entire MathJax project, about 150 Mb.  See the comments at the
-bottom of this file.
+- Smooth transition between bulk values
+- Wider profile, smoother transition
+- Interface effect delayed (Onsager factor)
+
+<font color="red">
+<center>No great surprises</center>
+</font>
+
+<img src="images/Li-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/Br-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+???
+
+- on the x axis is the distance from the interface center
+- Lithium and bromide ions
+- Transport from a water droplet to vapour
+- `\(R_0 = 20~\AA\)`
+- Figures report user-defined values of `\(\tilde{w}\)`
+
+---
+layout: false
+
+## Effect of interface width: acetone
+
+- Wider profile, smoother transition
+- Interface effect delayed (Onsager factor)
+- Orientation matters
+
+<img src="images/acetone-par-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/acetone-perp-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+<font color="red">
+<center>Two figures missing here</center>
+</font>
+
+???
+
+- on the x axis is the distance from the interface center
+- Acetone with dipole moment tangent or normal to the droplet surface
+- Transport from a water droplet to vapour
+- `\(R_0 = 20~\AA\)`
+- Figures report user-defined values of `\(\tilde{w}\)`
+- When the dipole moment is normal to the droplet, different parts of the molecule
+experience different dielectric environments. Of course, the interface size
+has to be quite small!
+
+---
+layout: false
+
+## Effect of interface width: PNA and L0
+
+- Only when `\(\tilde{w}=20~\AA\)` profile is smooth
+- Molecules experience different dielectric environments
+
+<img src="images/pna-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/L0-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+<img src="images/pna.jpg" style="float: center; width: 10%; margin-left: 20%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/L0.jpg" style="float: center; width: 15%; margin-left: 30%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+???
+
+- on the x axis is the distance from the interface center
+- Both molecules are randomly oriented wrt the droplet
+- Transport from a water droplet to vapour
+- `\(R_0 = 20~\AA\)`
+- Figures report user-defined values of `\(\tilde{w}\)`
+- Given that the molecules are larger, features (bumps) in the
+solvation profiles will be smoothed out only with larger widths
+
+---
+layout: false
+
+## Effect of interface curvature: full profiles
+
+- No effect on bulk values: Gauss' theorem
+- Larger radius, smoother profile
+
+<img src="images/Li-water_vapor-radius.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/Li-oil_water-radius.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+<img src="images/acetone-perp-water_vapor-radius.jpg" style="float: left; width: 45%; margin-left: 25%; margin-bottom: 0.5em;">
+
+???
+
+- all interfaces have `\(\tilde{w} = 5.0~\AA\)`
+- on the x axis is the distance from the droplet center
+- We vary the droplet radius `\(R_0 = 5, 10, 20, 40, 80~\AA\)`
+- First picture: lithium ion, water to vapor transfer
+- Second picture: lithium ion, oil (`\(\varepsilon = 2\)`) to vapor transfer
+- Third picture: acetone, water to vapor transfer. Dipole moment is normal to droplet
+
+---
+layout: false
+
+## Effect of interface curvature: lithium ion
+
+`$$\Delta G_{R_0}(z) = G_{R_0}(z+R_0) - G_{R_0=80} (z+80)$$`
+
+- No effect on bulk values: Gauss' theorem
+- Water droplet to vapor bulk:
+  * image potential acts at medium-long range
+  * largest effect **before** ion crosses interface
+- Oil droplet to water bulk:
+  * image potential acts at short range
+  * largest effect **after** ion crosses interface
+
+<img src="images/Li-water_vapor-curvature.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/Li-oil_water-curvature.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+<font color="red">
+<center>Why are some points missing from the black curve in the second plot?</center>
+</font>
+
+???
+
+- all interfaces have `\(\tilde{w} = 5.0~\AA\)`
+- Take `\(R_0 = 80~\AA\)` as reference. We're not taking the difference wrt the
+  planar results as the two implementations are different and we don't want to
+  introduce implementation bias.
+- on the x axis is the distance from the interface center
+- First picture: lithium ion, water to vapor transfer
+- Second picture: lithium ion, oil (`\(\varepsilon = 2\)`) to vapor transfer
+- The high dielectric constant of water makes the image potential negligible inside
+the droplet and dominant outside.
+- For the oil droplet the converse happens.
+
+---
+layout: false
+
+## Effect of interface curvature: acetone
+
+`$$\Delta G_{R_0}(z) = G_{R_0}(z+R_0) - G_{R_0=80} (z+80)$$`
+
+- Profile features: combined effect of width and curvature
+- No effect on bulk values: Gauss' theorem
+- Largest effect localized at interface center
+- Relative to bulk solvation, larger effects than for ions
+- Similar conclusions for static dipole moments
+
+<img src="images/acetone-perp-water_vapor-curvature.jpg" style="width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/dipole-acetone-perp-water_vapor-curvature.jpg" style="width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+???
+
+- all interfaces have `\(\tilde{w} = 5.0~\AA\)`
+- we're not taking the difference wrt the planar results as the two implementations
+are different and we don't want to introduce implementation bias.
+- on the x axis is the distance from the interface center
+- acetone, water to vapor transfer. Dipole moment is normal to droplet
+- 30% vs. 13% solvation effect wrt bulk solvation when comparing a dipolar to
+  an ionic system
+
+---
+
+## Conclusions
+
+- _Generic_ implementation for diffuse permittivity profiles
+   * Membrane-like profiles
+   * Planar interfaces
+- _Robust_ implementation for reasonable (not too steep) profiles
+   * Use of automatic differentiation (AD) for the Green's function
+- Investigate effect on response properties
+
+???
+
+- Different profiles functional forms are no problem, provided they are
+  reasonable
+- Planar interfaces have different symmetry, but similar considerations apply.
+  The only difference is in the separation of the Coulomb singularity
+
+---
+class: left
+layout: false
+
+## _And now for something completely different_
+
+<p style="text-align:center;"><img src="images/damn_solvent.png" style="width: 75%"></p>
+
+.footnote[Image credit: Davide Michetti]
+
+---
+layout: false
+
+## Acknowldegements
+
+- Dr. Stefano Corni (CNR, Modena)
+- Dr. Krzysztof Mozgawa
+- Dr. Hui Cao
+- Dr. Ville Weijo
+- Prof. Luca Frediani
+
 ---
 name: last-page
 template: inverse
 
-## That's all folks (for now)!
+## Thanks for your attention!
 
-Slideshow created using [remark](http://github.com/gnab/remark).
+Slideshow created using [remark] and served using [cicero]
+
+[remark]: https://github.com/gnab/remark
+[cicero]: https://github.com/bast/cicero
