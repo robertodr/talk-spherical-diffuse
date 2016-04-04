@@ -129,11 +129,8 @@ $$`
   the method
 
 ---
-class: center, middle, inverse
-## Green's functions in spherical symmetry
-
----
 layout: false
+## Green's functions in spherical symmetry
 
 <img src="images/spherical_diffuse.jpg" style="float: left; width: 35%; margin-right: 1%; margin-bottom: 0.5em;">
 <img src="images/equations.png" style="float: left; width: 55%; margin-right: 1%; margin-bottom: 0.5em;">
@@ -273,10 +270,11 @@ $$
  \right.
 $$
 `
-- Summations are truncated to `\(L\)`
-- Separation coefficient evaluated at `\(\ell=2L\)`
+- Summations truncated to `\(L\)`, separation coefficient evaluated at `\(\ell=2L\)`
+- `\(\mathrm{tanh}\)` and `\(\mathrm{erf}\)` profiles available
 - Cubic spline interpolations for radial sampling of solutions
 - Green's function directional derivative evaluated by a 3-point stencil
+- One-point centroid collocation BEM on spherical polygons (GePol)
 - Available in [LSDALTON](http://daltonprogram.org/) _via_ [PCMSolver](http://pcmsolver.readthedocs.org)
 
 ???
@@ -285,15 +283,13 @@ $$
 - Truncation is to `\(L=30\)` by default
 
 ---
-class: center, middle, inverse
-## Results
-
----
 layout: false
 
 ## Permittivity profiles
 
-<p style="text-align:center;"><img src="images/permittivity_profiles.jpg" style="width: 55%"></p>
+<img src="images/permittivity_profiles.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/permittivity_app.jpg" style="float: left; width: 48%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
 
 `$$
 \begin{alignat}{2}
@@ -306,7 +302,7 @@ $$`
 - Onset of dielectric effect dominated by _Onsager factor_
 - `\(\Sigma\)` has to be differentiable
 - `\(w\)` too small leads to numerical instabilities
-- Basis set, functional, geometry...
+- B3LYP/aug-cc-pVDZ calculations
 
 ???
 
