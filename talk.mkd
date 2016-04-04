@@ -135,18 +135,10 @@ class: center, middle, inverse
 ---
 layout: false
 
-- The Green's function is the solution to:
-`
-$$
-  \nabla\cdot[\varepsilon(\mathbf{r})\nabla
-  G(\mathbf{r},\mathbf{r}^\prime)]=-4\pi\delta(\mathbf{r}-\mathbf{r}^\prime)
-$$
-`
-- Spherically symmetric permittivity `\( \varepsilon(\mathbf{r}) \equiv \varepsilon(r) \)`, thus:
-`$$
- G(\mathbf{r}, \mathbf{r}^\prime) = \sum_{\ell=0}^{\infty} R_\ell(r, r^\prime) P_{\ell}(\cos \gamma),
- \quad \cos\gamma = \frac{\mathbf{r}\cdot\mathbf{r}^\prime}{|\mathbf{r}| |\mathbf{r}^\prime|}
-$$`
+<img src="images/spherical_diffuse.jpg" style="float: left; width: 35%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/equations.png" style="float: left; width: 55%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
 - The radial part is solution to:
 `
 $$
@@ -305,7 +297,7 @@ layout: false
 
 `$$
 \begin{alignat}{2}
-\varepsilon(z) =  \frac{\varepsilon_1+\varepsilon_2}{2} + \frac{\varepsilon_2-\varepsilon_1}{2}\Sigma\left(\frac{z-c}{w}\right);
+\varepsilon(r) =  \frac{\varepsilon_1+\varepsilon_2}{2} + \frac{\varepsilon_2-\varepsilon_1}{2}\Sigma\left(\frac{r-c}{w}\right);
 \quad&\quad
 f(\varepsilon) =  \frac{\varepsilon(z)-1 }{\varepsilon(z)}
 \end{alignat}
@@ -314,6 +306,7 @@ $$`
 - Onset of dielectric effect dominated by _Onsager factor_
 - `\(\Sigma\)` has to be differentiable
 - `\(w\)` too small leads to numerical instabilities
+- Basis set, functional, geometry...
 
 ???
 
