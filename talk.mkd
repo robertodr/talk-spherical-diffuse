@@ -357,6 +357,9 @@ layout: false
 <img src="images/acetone-par-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
 <img src="images/acetone-perp-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
 <p style="clear: both;">
+<img src="images/acetone_tangent.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/acetone_normal.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
 
 <font color="red">
 <center>Two figures missing here</center>
