@@ -517,6 +517,16 @@ layout: false
 .footnote[Image credit: Davide Michetti]
 
 ---
+class: left
+layout: false
+
+## QM/PCM/MM
+
+<img src="images/qmpcmmm_case1.jpg" style="width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/qmpcmmm_case2.jpg" style="width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+---
 layout: false
 
 ## Acknowldegements
