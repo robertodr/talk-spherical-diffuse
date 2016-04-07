@@ -6,7 +6,7 @@ class: center, middle, inverse
 
 .author[Roberto Di Remigio]
 
-.date[6 April 2016, Alta]
+.date[7 April 2016, Alta]
 
 .footnote[Slides available on [GitHub](https://github.com/robertodr/talk-spherical-diffuse), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licensed]
 
@@ -45,11 +45,19 @@ layout: false
 - QM/MM only recently, for planar interfaces
 - Continuum approach: consider a spatially varying permittivity
 
+<div class="imageWrapper">
+  <img class="overlayImage" src="images/spherical_diffuse.jpg" style="width: 80%" align="middle">
 --
+  <img class="overlayImage" src="images/paper.png" style="width: 110%" align="middle">
+</div>
+<p style="clear: both;">
 
-<p style="text-align:left;">
-<img src="images/paper.png" style="width: 110%">
-</p>
+???
+
+- Interfaces are ubiquitous
+- We want to be able to treat chemistry and physics at interfaces, e.g.
+  adsorption phenomena, surface enhanced spectroscopies.
+- Some spectroscopic phenomena are relevant in symmetry-broken environments (SHG)
 
 ---
 ## Polarizable continuum model.red[<sup>1</sup>]
@@ -139,7 +147,7 @@ $$`
 layout: false
 ## Green's functions in spherical symmetry
 
-<img src="images/spherical_diffuse.jpg" style="float: left; width: 35%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/spherical_diffuse.jpg" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;">
 <img src="images/equations.png" style="float: left; width: 55%; margin-right: 1%; margin-bottom: 0.5em;">
 <p style="clear: both;">
 
@@ -154,6 +162,47 @@ $$
    * `\(\lambda_\varepsilon(r) = \frac{\mathop{}\!\mathrm{d}\varepsilon(r)}{\mathop{}\!\mathrm{d}r}\frac{1}{\varepsilon(r)}\)`
      weighted dielectric distribution
 - Two solutions, `\(u_\ell\sim r^\ell\)` and `\(v_\ell\sim r^{-\ell -1}\)`:
+   * `\(u_\ell\)` and `\(v_\ell\)` to be determined _numerically_
+
+`
+$$
+  R_\ell =
+ \begin{cases}
+   c_\ell^{(1)}(r^\prime) u_\ell(r) &+
+   c_\ell^{(2)}(r^\prime) v_\ell(r),\, \text{for}\,\, r < r^\prime \\
+   c_\ell^{(3)}(r^\prime) u_\ell(r) &+
+   c_\ell^{(4)}(r^\prime) v_\ell(r),\, \text{for}\,\, r > r^\prime
+ \end{cases}
+$$
+`
+
+???
+
+- The Green's function for a given differential operator is the solution to the
+  differential equation with a point source. It's also called the _fundamental
+  solution_
+- We also have azimuthal symmetry, hence the summation over Legendre
+  polynomials. This can be shown more rigorously starting from the summation
+  over spherical harmonics.
+- The radial equation is similar to the usual one where spherical boundary
+  conditions are imposed. The difference is the additional first order term due
+  to the weighted dielectric distribution, which can be thought to act as a damping
+  term. The source term is also "damped".
+- Given that the permittivity profile is sigmoidal, we impose that the
+  solutions to the homogeneous equation are asymptotically equal to the ones
+  for spherical boundary conditions.
+
+---
+layout: false
+## Green's functions in spherical symmetry, contd.
+
+<img src="images/spherical_diffuse.jpg" style="float: left; width: 30%; margin-right: 1%; margin-bottom: 0.5em;">
+<img src="images/equations.png" style="float: left; width: 55%; margin-right: 1%; margin-bottom: 0.5em;">
+<p style="clear: both;">
+
+
+- Two solutions, `\(u_\ell\sim r^\ell\)` and `\(v_\ell\sim r^{-\ell -1}\)`:
+   * `\(W_\ell = \frac{\mathop{}\!\mathrm{d} v_\ell}{\mathop{}\!\mathrm{d}r}u_\ell - \frac{\mathop{}\!\mathrm{d}u_\ell}{\mathop{}\!\mathrm{d}r}v_\ell\)` is the _Wronskian_
 `
 $$
   G(\mathbf{r}, \mathbf{r}^\prime) = \sum_{\ell=0}^\infty G_\ell(\mathbf{r}, \mathbf{r}^\prime)
@@ -170,21 +219,18 @@ $$
   \end{cases}
 $$
 `
-   * `\(u_\ell\)` and `\(v_\ell\)` to be determined _numerically_
-   * `\(W_\ell = \frac{\mathop{}\!\mathrm{d} v_\ell}{\mathop{}\!\mathrm{d}r}u_\ell - \frac{\mathop{}\!\mathrm{d}u_\ell}{\mathop{}\!\mathrm{d}r}v_\ell\)` is the _Wronskian_
+- Components `\(G_\ell(\mathbf{r}, \mathbf{r}^\prime)\)` contain Coulomb and image contributions:
+   * Numerically slowly converging
+   * Troublesome for subsequent BEM collocation
+
+<font color="red">
+<center>Need to separate Coulomb and image potentials!</center>
+</font>
 
 ???
 
-- The Green's function for a given differential operator is the solution to the
-  differential equation with a point source. It's also called the _fundamental
-  solution_
-- We also have azimuthal symmetry, hence the summation over Legendre
-  polynomials. This can be shown more rigorously starting from the summation
-  over spherical harmonics.
-- The radial equation is similar to the usual one where spherical boundary
-  conditions are imposed. The difference is the additional first order term due
-  to the weighted dielectric distribution, which can be thought to act as a damping
-  term. The source term is also "damped".
+- The actual solutions are fixed by integrating the equation on a vanishingly
+  small volume around the source discontinuity
 
 ---
 class: left
@@ -198,10 +244,17 @@ $$
 $$
 `
 
-- Components `\(G_\ell(\mathbf{r}, \mathbf{r}^\prime)\)` contain Coulomb and image contributions:
-   * Numerically slowly converging
-   * Troublesome for subsequent BEM collocation
-- Use _exact_ expression of Coulomb singularity, modulated by proper coefficient:
+- Use _exact_ expression of Coulomb singularity:
+`
+$$
+  \frac{1}{|\mathbf{r}-\mathbf{r}^\prime|} =
+  \frac{1}{r_>}
+  \sum^\infty_{\ell=0}
+  \left(\frac{r_<}{r_>}\right)^\ell
+  P_\ell(\cos\gamma)
+$$
+`
+- ...modulated by proper coefficient:
 `
 $$
   G(\mathbf{r}, \mathbf{r}^\prime) =
@@ -215,16 +268,10 @@ $$
 $$
   C(\mathbf{r}, \mathbf{r}^\prime)
   =
-  \begin{cases}
-    \frac{1}{r^\prime}
-    \lim_{\ell\rightarrow\infty}
-    \left(\frac{r}{r^\prime}\right)^\ell
-    \frac{P_\ell(\cos\gamma)}{G_\ell(\mathbf{r}, \mathbf{r}^\prime)},\,\text{for}\,\, r<r^\prime \\
-    \frac{1}{r}
-    \lim_{\ell\rightarrow\infty}
-    \left(\frac{r^\prime}{r}\right)^\ell
-    \frac{P_\ell(\cos\gamma)}{G_\ell(\mathbf{r}, \mathbf{r}^\prime)},\,\text{for}\,\, r>r^\prime
-  \end{cases}
+  \frac{1}{r_>}
+  \lim_{\ell\infty}
+  \left(\frac{r_<}{r_>}\right)^\ell
+  \frac{P_\ell(\cos\gamma)}{G_\ell(\mathbf{r}, \mathbf{r}^\prime)}
 $$
 `
 
@@ -332,10 +379,6 @@ layout: false
 - Wider profile, smoother transition
 - Interface effect delayed (Onsager factor)
 
-<font color="red">
-<center>No great surprises</center>
-</font>
-
 <img src="images/Li-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
 <img src="images/Br-water_vapor.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
 <p style="clear: both;">
@@ -408,29 +451,6 @@ solvation profiles will be smoothed out only with larger widths
 ---
 layout: false
 
-## Effect of interface curvature: full profiles
-
-- No effect on bulk values: Gauss' theorem
-- Larger radius, smoother profile
-
-<img src="images/Li-water_vapor-radius.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
-<img src="images/Li-oil_water-radius.jpg" style="float: left; width: 45%; margin-right: 1%; margin-bottom: 0.5em;">
-<p style="clear: both;">
-
-<img src="images/acetone-perp-water_vapor-radius.jpg" style="float: left; width: 45%; margin-left: 25%; margin-bottom: 0.5em;">
-
-???
-
-- all interfaces have `\(\tilde{w} = 5.0~\AA\)`
-- on the x axis is the distance from the droplet center
-- We vary the droplet radius `\(R_0 = 5, 10, 20, 40, 80~\AA\)`
-- First picture: lithium ion, water to vapor transfer
-- Second picture: lithium ion, oil (`\(\varepsilon = 2\)`) to vapor transfer
-- Third picture: acetone, water to vapor transfer. Dipole moment is normal to droplet
-
----
-layout: false
-
 ## Effect of interface curvature: lithium ion
 
 `$$\Delta G_{R_0}(z) = G_{R_0}(z+R_0) - G_{R_0=80} (z+80)$$`
@@ -450,14 +470,15 @@ layout: false
 ???
 
 - all interfaces have `\(\tilde{w} = 5.0~\AA\)`
+- on the x axis is the distance from the droplet center
+- We vary the droplet radius `\(R_0 = 5, 10, 20, 40, 80~\AA\)`
 - Take `\(R_0 = 80~\AA\)` as reference. We're not taking the difference wrt the
   planar results as the two implementations are different and we don't want to
   introduce implementation bias.
-- on the x axis is the distance from the interface center
 - First picture: lithium ion, water to vapor transfer
 - Second picture: lithium ion, oil (`\(\varepsilon = 2\)`) to vapor transfer
-- The high dielectric constant of water makes the image potential negligible inside
-the droplet and dominant outside.
+- The high dielectric constant of water makes the image potential negligible
+  inside the droplet and dominant outside.
 - For the oil droplet the converse happens.
 
 ---
@@ -480,9 +501,13 @@ layout: false
 ???
 
 - all interfaces have `\(\tilde{w} = 5.0~\AA\)`
-- we're not taking the difference wrt the planar results as the two implementations
-are different and we don't want to introduce implementation bias.
+- we're not taking the difference wrt the planar results as the two
+  implementations are different and we don't want to introduce implementation
+  bias.
 - on the x axis is the distance from the interface center
+- acetone, water to vapor transfer. Dipole moment is normal to droplet
+- The appearance of features at the interface for larger solutes is due both to
+  the width of the interfacial region and the radius of the droplet
 - acetone, water to vapor transfer. Dipole moment is normal to droplet
 - 30% vs. 13% solvation effect wrt bulk solvation when comparing a dipolar to
   an ionic system
@@ -511,6 +536,8 @@ class: left
 layout: false
 
 ## _And now for something completely different_
+
+--
 
 <p style="text-align:center;"><img src="images/damn_solvent.png" style="width: 75%"></p>
 
